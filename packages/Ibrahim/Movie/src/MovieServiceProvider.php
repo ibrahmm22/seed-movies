@@ -16,16 +16,12 @@ class MovieServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'ibrahim');
-        // $this->loadViewsFrom(__DIR__.'/../resources/views', 'ibrahim');
-         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
         $this->app['router']->namespace('Ibrahim\\Movie\\Controllers')
             ->middleware(['api'])
             ->group(function () {
                 $this->loadRoutesFrom(__DIR__ . '/../routes/api.php');
             });
 
-        // Publishing is only necessary when using the CLI.
         if ($this->app->runningInConsole()) {
             $this->bootForConsole();
         }
@@ -38,14 +34,14 @@ class MovieServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__.'/../config/movie.php', 'movie');
+        $this->mergeConfigFrom(__DIR__ . '/../config/movie.php', 'movie');
 
         // Register the service the package provides.
         $this->app->singleton('movie', function ($app) {
             return new Movie;
         });
 
-        $this->app->singleton('movie.console.kernel', function($app) {
+        $this->app->singleton('movie.console.kernel', function ($app) {
             $dispatcher = $app->make(\Illuminate\Contracts\Events\Dispatcher::class);
             return new Kernel($app, $dispatcher);
         });
@@ -69,30 +65,16 @@ class MovieServiceProvider extends ServiceProvider
      */
     protected function bootForConsole()
     {
+        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
         // Publishing the configuration file.
         $this->publishes([
-            __DIR__.'/../config/movie.php' => config_path('movie.php'),
+            __DIR__ . '/../config/movie.php' => config_path('movie.php'),
         ], 'movie.config');
 
-        // Publishing the views.
-        /*$this->publishes([
-            __DIR__.'/../resources/views' => base_path('resources/views/vendor/ibrahim'),
-        ], 'movie.views');*/
 
-        // Publishing assets.
-        /*$this->publishes([
-            __DIR__.'/../resources/assets' => public_path('vendor/ibrahim'),
-        ], 'movie.views');*/
-
-        // Publishing the translation files.
-        /*$this->publishes([
-            __DIR__.'/../resources/lang' => resource_path('lang/vendor/ibrahim'),
-        ], 'movie.views');*/
-
-        // Registering package commands.
-         $this->commands([
-             SyncCategoriesCommand::class,
-             SyncMoviesCommand::class
-         ]);
+        $this->commands([
+            SyncCategoriesCommand::class,
+            SyncMoviesCommand::class
+        ]);
     }
 }

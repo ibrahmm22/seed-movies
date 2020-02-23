@@ -64,7 +64,7 @@
     "repositories": {
         "ibrahim/movie": {
             "type": "path",
-            "url": "/home/ibrahim/code/movies/packages/Ibrahim/Movie"
+            "url": "packages/Ibrahim/Movie"
         }
     }
 }

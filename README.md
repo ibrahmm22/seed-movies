@@ -13,4 +13,9 @@ php artisan migrate
 php artisan sync:categories
 
 ```
+To run tests
+```bash
+./vendor/bin/phpunit
+
+```
 

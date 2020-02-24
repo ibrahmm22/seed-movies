@@ -26,6 +26,7 @@ class MovieDataSourceRepository implements RepositoryInterface
             $response = $this->client->request('GET', $url);
             $results = json_decode($response->getBody())->results;
             $movies = array_merge($movies, $results);
+
         }
         return $movies;
     }
@@ -45,5 +46,6 @@ class MovieDataSourceRepository implements RepositoryInterface
         $topRatedMovies = $this->getTopRatedMovies();
         $movies = array_merge($latestMovies, $topRatedMovies);
         app(EloquentMovieRepository::class)->insert($movies);
+        return true;
     }
 }

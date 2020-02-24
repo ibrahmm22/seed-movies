@@ -21,8 +21,7 @@ WORKDIR /usr/src/app
 COPY ./composer.* /usr/src/app/
 
 
-RUN composer install --no-dev --prefer-dist --optimize-autoloader && \
-    composer clear-cache
+RUN composer install
 
 RUN PATH=$PATH:/usr/src/apps/vendor/bin:bin
 #RUN bin/console doctrine:schema:create
